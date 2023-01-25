@@ -1,4 +1,4 @@
 package metadata
 
 var AppName = "Radiant"
-var Version = 1.0
+var Version float32 = 1.0
