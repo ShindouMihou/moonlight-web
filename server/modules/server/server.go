@@ -4,6 +4,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/kataras/golog"
 	"github.com/kataras/iris/v12"
+	"github.com/kataras/iris/v12/middleware/cors"
 	"github.com/kataras/iris/v12/middleware/logger"
 	"server/router"
 )
@@ -18,6 +19,7 @@ func InitIris() {
 	Iris = iris.New()
 	Iris.Validator = validator.New()
 	Iris.Use(logger.New(logger.DefaultConfig()))
+	Iris.UseRouter(cors.New().AllowOrigin("*").Handler())
 	router.Attach(Iris)
 
 	golog.Info("launching iris at http://0.0.0.0:7779")
