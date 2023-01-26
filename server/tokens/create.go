@@ -6,15 +6,16 @@ import (
 	"time"
 )
 
-func Create() (*string, error) {
+func Create() (*string, *time.Time, error) {
+	expiry := time.Now().Add(30 * 24 * time.Hour)
 	claims := jwt.RegisteredClaims{
 		Issuer:    modules.EnsureEnv("MOONLIGHT_AUTH_ISSUER"),
-		ExpiresAt: jwt.NewNumericDate(time.Now().Add(30 * 24 * time.Hour)),
+		ExpiresAt: jwt.NewNumericDate(expiry),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signed, err := token.SignedString([]byte(modules.EnsureEnv("MOONLIGHT_AUTH_KEY")))
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	return &signed, nil
+	return &signed, &expiry, nil
 }

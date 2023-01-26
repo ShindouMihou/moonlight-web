@@ -41,6 +41,8 @@ func Attach(Iris *iris.Application) {
 				mod(additionalRoute, party.Post(additionalRoute.Path, additionalRoute.Handler))
 			case method.PutRoute:
 				mod(additionalRoute, party.Put(additionalRoute.Path, additionalRoute.Handler))
+			case method.PatchRoute:
+				mod(additionalRoute, party.Patch(additionalRoute.Path, additionalRoute.Handler))
 			case method.DeleteRoute:
 				mod(additionalRoute, party.Delete(additionalRoute.Path, additionalRoute.Handler))
 			case method.PartyRoute:
@@ -61,6 +63,8 @@ func Attach(Iris *iris.Application) {
 			mod(route, Iris.Post(route.Path, route.Handler))
 		case method.PutRoute:
 			mod(route, Iris.Put(route.Path, route.Handler))
+		case method.PatchRoute:
+			mod(route, Iris.Patch(route.Path, route.Handler))
 		case method.DeleteRoute:
 			mod(route, Iris.Delete(route.Path, route.Handler))
 		case method.PartyRoute:

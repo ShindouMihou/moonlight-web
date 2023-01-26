@@ -8,7 +8,7 @@ import (
 
 type iGetIndexResponse struct {
 	Timestamp time.Time `json:"timestamp"`
-	Version   float64   `json:"version"`
+	Version   float32   `json:"version"`
 }
 
 func GetIndex(ctx iris.Context) {

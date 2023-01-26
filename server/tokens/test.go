@@ -6,7 +6,7 @@ import (
 
 func Test() {
 	for i := 0; i < 10; i++ {
-		token, err := Create()
+		token, _, err := Create()
 		if err != nil {
 			golog.Fatal("failed to create token during test at index ", i, " with error: ", err)
 		}
