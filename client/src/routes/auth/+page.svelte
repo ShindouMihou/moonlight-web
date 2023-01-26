@@ -4,13 +4,15 @@
     import {Icon} from "@steeze-ui/svelte-icon";
     import {ExclamationTriangle, LockClosed, Person} from "@steeze-ui/radix-icons";
     import {ClientName, ServerAddr} from "$lib/config";
+    import type {MidnightError} from "../../lib/types/Error";
+    import {AUTH_TOKEN} from "../../lib/store";
 
     let username: string = ""
     let password: string = ""
 
     let error: string | null = null
 
-    type AuthenticationResponse = { token: string }
+    type AuthenticationResponse = { token: string, expiresIn: Date }
 
     async function authenticate() {
         if (username.length === 0 || password.length === 0) {
@@ -18,10 +20,15 @@
             return
         }
         try {
-            const response = await fetch(ServerAddr + "/user/token", {
+            const response = await fetch(ServerAddr + "/token", {
                 method: 'PUT',
                 body: JSON.stringify({ username: username, password: password })
             })
+            if (response.status === 401) {
+                const errorResponse: MidnightError = await response.json()
+                error = errorResponse.error
+                return
+            }
             if (!response.ok) {
                 error = "The server is having a mushroom day today."
                 return
@@ -30,7 +37,10 @@
 
             // IMPORTANT: Local storage is unsafe, but unless you do some sketchy stuff that'll make
             // the site vulnerable to XSS, this should be good enough.
-            localStorage.setItem("[token]", payload.token)
+            localStorage.setItem("auth.token", payload.token)
+            $AUTH_TOKEN = payload.token
+
+            window.location.replace("/dashboard")
         } catch (e) {
             error = "An internal error occurred: " + e
         }

@@ -1,3 +1,3 @@
-<div class="border-r border-r-[#151515] flex flex-col max-w-xs w-full min-h-screen">
+<div class="border-r border-r-[#151515] flex flex-col max-w-xs w-full min-h-screen overflow-y-scroll">
     <slot/>
 </div>
