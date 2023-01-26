@@ -53,7 +53,7 @@ func Update(id string, name string) error {
 	if err != nil {
 		return err
 	}
-	if result.ModifiedCount == 0 {
+	if result.MatchedCount == 0 {
 		return mongo.ErrNoDocuments
 	}
 	return nil
