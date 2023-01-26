@@ -31,6 +31,7 @@ var Routes = []Route{
 				Routes: []Route{
 					{Method: method.DeleteRoute, Handler: routes.DelBook},
 					{Method: method.PatchRoute, Handler: routes.PatchBook},
+					{Method: method.GetRoute, Handler: routes.GetBook},
 					{
 						Method: method.PartyRoute,
 						Path:   "/chapters",
